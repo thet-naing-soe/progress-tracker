@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
 const StyledSection = styled.div`
@@ -19,10 +19,16 @@ const WeekdayTitle = styled.div`
   width: 50px;
   border-right: solid 3px lightgrey;
 `;
-export default function Section({text}) {
+const WeekendTitle = styled(WeekdayTitle)`
+  background-color: lightgrey;
+  border-radius: 7px 0 0 7px;
+`;
+export default function Section({ text }) {
+  const isWeekend = text === "S";
   return (
     <StyledSection>
-      <WeekdayTitle>{text}</WeekdayTitle>
+      {!isWeekend && <WeekdayTitle>{text}</WeekdayTitle>}
+      {isWeekend && <WeekendTitle>{text}</WeekendTitle>}
     </StyledSection>
   );
 }

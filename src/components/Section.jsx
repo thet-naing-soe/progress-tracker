@@ -27,25 +27,33 @@ const ProgressBar = styled.div`
   background-color: ${({ progress }) => {
     const numeric = progress.slice(0, -1);
     const interger = parseInt(numeric);
-    if (interger >= 80) return "red";
-    else if (interger >= 60) return "orange";
-    else if (interger >= 40) return "yellow";
-    else return "green";
+    if (interger >= 80) return "#FFB3BA";
+    else if (interger >= 60) return "#FFDFBA";
+    else if (interger >= 40) return "#FFFFBA";
+    else return "#BAFFC9";
   }};
   height: 50px;
   width: ${({ progress }) => progress || "0%"};
 `;
+const TodayProgressBar = styled(ProgressBar)`
+  background-color: "purple";
+`;
 const ProgressSection = styled.div`
   width: 250px;
 `;
-export default function Section({ text, progress }) {
+export default function Section({ text, progress, day }) {
+  let today = new Date();
+  let dayOfTheWeek = today.getDay();
+  const isToday = day === dayOfTheWeek;
+  console.log(dayOfTheWeek);
   const isWeekend = text === "S";
   return (
     <StyledSection>
       {!isWeekend && <WeekdayTitle>{text}</WeekdayTitle>}
       {isWeekend && <WeekendTitle>{text}</WeekendTitle>}
       <ProgressSection>
-        <ProgressBar progress={progress} />
+        {isToday && <TodayProgressBar progress={progress} />}
+        {!isToday && <ProgressBar progress={progress} />}
       </ProgressSection>
     </StyledSection>
   );
